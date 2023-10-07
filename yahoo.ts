@@ -1,8 +1,6 @@
 import {AuthorizationCode} from 'simple-oauth2';
 
 export class YahooSports {
-  refreshToken: string;
-  accessToken: string;
   config: {
     client: {
       id: string;
