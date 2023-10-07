@@ -1,7 +1,6 @@
 import {AuthorizationCode} from 'simple-oauth2';
 
 export class YahooSports {
-  authHeader: string;
   refreshToken: string;
   accessToken: string;
   config: {
@@ -15,7 +14,6 @@ export class YahooSports {
   };
 
   constructor(clientKey: string, clientSecret: string) {
-    this.authHeader = `Basic ${Buffer.from(`${clientKey}:${clientSecret}`).toString('base64')}`;
     this.config = {
       client: {
         id: clientKey,
@@ -29,9 +27,6 @@ export class YahooSports {
 
   async getToken() {
     const client = new AuthorizationCode(this.config);
-
-    const authorizationUri = client.authorizeURL();
-    console.log(authorizationUri);
 
     const tokenParams = {
       code: process.env.YAHOO_AUTHORIZATION_CODE,
