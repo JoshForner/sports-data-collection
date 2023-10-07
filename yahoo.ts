@@ -1,107 +1,49 @@
-import axios, { AxiosResponse } from 'axios';
-import qs from 'qs';
-import parser from 'xml2json';
+import {AuthorizationCode} from 'simple-oauth2';
 
 export class YahooSports {
-  authorizationCode: string;
-  client: {
-    key: string;
-    secret: string;
-  };
-  request: {
-    tokenHost: 'https://api.login.yahoo.com';
-    tokenPath: '/oauth2/get_token';
-    contentType: 'application/x-www-form-urlencoded';
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36';
-  };
   authHeader: string;
   refreshToken: string;
   accessToken: string;
-
-  constructor(clientKey: string, clientSecret: string, authorizationCode: string) {
-    this.client = {
-        key: clientKey,
-        secret: clientSecret,
+  config: {
+    client: {
+      id: string;
+      secret: string;
     };
-    this.authorizationCode = authorizationCode;
-    this.authHeader = `Basic ${Buffer.from(`${this.client.key}:${this.client.secret}`).toString('base64')}`;
+    auth: {
+      tokenHost: string;
+    };
+  };
+
+  constructor(clientKey: string, clientSecret: string) {
+    this.authHeader = `Basic ${Buffer.from(`${clientKey}:${clientSecret}`).toString('base64')}`;
+    this.config = {
+      client: {
+        id: clientKey,
+        secret: clientSecret,
+      },
+      auth: {
+        tokenHost: 'https://api.login.yahoo.com'
+      }
+    };
   }
 
   async getToken() {
-    return await axios({
-      url: this.request.tokenHost + this.request.tokenPath,
-      method: 'post',
-      headers: {
-        'Authorization': `Basic ${this.authHeader}`,
-        'Content-Type': this.request.contentType,
-        'User-Agent': this.request.userAgent,
-      },
-      data: qs.stringify({
-        client_id: this.client.key,
-        client_secret: this.client.secret,
-        redirect_uri: 'oob',
-        code: this.authorizationCode,
-        grant_type: 'authorization_code'
-      }),
-      timeout: 1000,
-    }).then((res) => {
-      console.log(res);
-      return res;
-    })
-      .catch((err) => {
-      console.error(`Error in getInitialAuthorization(): ${err}`);
-    });
-  }
+    const client = new AuthorizationCode(this.config);
 
-  async refreshAuthorizationToken(token: string | void | AxiosResponse<never, never>) {
-    return await axios({
-      url: this.request.tokenHost + this.request.tokenPath,
-      method: 'post',
-      headers: {
-        'Authorization': `Basic ${this.authHeader}`,
-        'Content-Type': this.request.contentType,
-        'User-Agent': this.request.userAgent,
-      },
-      data: qs.stringify({
-        redirectUri: 'oob',
-        grantType: 'refresh_token',
-        refreshToken: token
-      }),
-      timeout: 10000,
-    }).catch((err) => {
-      console.error(`Error in refreshAuthorizationToken(): ${err}`);
-    });
-  }
+    const authorizationUri = client.authorizeURL();
+    console.log(authorizationUri);
 
-  async makeAPIrequest(url: string): Promise<unknown> {
-    let response;
+    const tokenParams = {
+      code: process.env.YAHOO_AUTHORIZATION_CODE,
+      redirect_uri: 'oob',
+      grant_type: 'authorization_code'
+    };
+
     try {
-      response = await axios({
-        url: url,
-        method: 'get',
-        headers: {
-          'Authorization': `Bearer ${this.accessToken}`,
-          'Content-Type': this.request.contentType,
-          'User-Agent': this.request.userAgent,
-        },
-        timeout: 10000,
-      });
-      const jsonData = JSON.parse(parser.toJson(response.data));
-      return jsonData;
-    } catch (err) {
-      if (err.response.data && err.response.data.error && err.response.data.error.description && err.response.data.error.description.includes("token_expired")) {
-        const newToken = await this.refreshAuthorizationToken(this.refreshToken);
-        if (newToken && newToken.data && newToken.data.access_token) {
-          this.refreshToken = newToken.data.refresh_token;
-          this.accessToken = newToken.data.access_token;
-
-          return this.makeAPIrequest(url);
-
-        }
-      } else {
-        console.error(`Error with credentials in makeAPIrequest()/refreshAuthorizationToken(): ${err}`);
-        process.exit();
-      }
+      const accessToken = await client.getToken(tokenParams);
+      console.log(accessToken);
+    } catch (error) {
+      console.log('Access Token Error', error.message);
     }
   }
 }
