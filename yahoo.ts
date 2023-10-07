@@ -29,7 +29,7 @@ export class YahooSports {
     const client = new AuthorizationCode(this.config);
 
     const tokenParams = {
-      code: process.env.YAHOO_AUTHORIZATION_CODE,
+      code: process.env.YAHOO_AUTHORIZATION_CODE || '',
       redirect_uri: 'oob',
       grant_type: 'authorization_code'
     };
