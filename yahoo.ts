@@ -53,7 +53,7 @@ export class YahooSports {
     });
   }
 
-  async refreshAuthorizationToken(token: string | void | AxiosResponse<any, any>) {
+  async refreshAuthorizationToken(token: string | void | AxiosResponse<never, never>) {
     return await axios({
       url: this.request.tokenHost + this.request.tokenPath,
       method: 'post',
@@ -73,7 +73,7 @@ export class YahooSports {
     });
   }
 
-  async makeAPIrequest(url: string): Promise<any> {
+  async makeAPIrequest(url: string): Promise<unknown> {
     let response;
     try {
       response = await axios({
