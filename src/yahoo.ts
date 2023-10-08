@@ -29,59 +29,55 @@ export class YahooSports {
 	}
 
 	async getToken() {
-		return axios({
-			url: this.url,
-			method: 'post',
-			headers: this.headers,
-			data: qs.stringify({
-				client_id: this.client.key,
-				client_secret: this.client.secret,
-				redirect_uri: 'oob',
-				code: this.client.authorizationCode,
-				grant_type: 'authorization_code',
-			}),
-			timeout: 10000,
-		}).then(async (res) => {
-			await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"));
-		}).catch((err) => {
-			console.error(`Error in getToken(): ${err}`);
-		});
+		try {
+			const response = await axios({
+				url: this.url,
+				method: 'post',
+				headers: this.headers,
+				data: qs.stringify({
+					client_id: this.client.key,
+					client_secret: this.client.secret,
+					redirect_uri: 'oob',
+					code: this.client.authorizationCode,
+					grant_type: 'authorization_code',
+				}),
+				timeout: 10000,
+			});
+		await fs.writeFile(this.filePath, JSON.stringify(response.data, null, "\t"));
+		} catch (error) {
+			console.error(`Error in getToken(): ${error}`);
+		}
 	}
 
 	async refreshToken() {
-		await fs.access(this.filePath)
-			.then(async () => {
-				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
-				return axios({
-					url: this.url,
-					method: 'post',
-					headers: this.headers,
-					data: qs.stringify({
-						redirect_uri: 'oob',
-						grant_type: 'refresh_token',
-						refresh_token: tokenData.refresh_token,
-					}),
-					timeout: 10000,
-				}).then(async (res) => {
-					await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"
-					)).catch((err) => {
-						throw err;
-					});
-				});
-			})
-			.catch(async (err) => {
-				if(err.message.includes('No such file or directory')){
-					console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
-				}
-				else {
-					console.error(`Error in refreshToken(): ${err}`);
-				}
+		try {
+			await fs.access(this.filePath);
+			const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
+			const response = await axios({
+				url: this.url,
+				method: 'post',
+				headers: this.headers,
+				data: qs.stringify({
+					redirect_uri: 'oob',
+					grant_type: 'refresh_token',
+					refresh_token: tokenData.refresh_token,
+				}),
+				timeout: 10000,
 			});
+			await fs.writeFile(this.filePath, JSON.stringify(response.data, null, "\t"));
+		} catch (error) {
+			if(error.message.includes('No such file or directory')){
+				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
+			}
+			else {
+				console.error(`Error in refreshToken(): ${error}`);
+			}
+		}
 	}
 
 	async callApi(url: string) {
-		await fs.access(this.filePath)
-			.then(async () => {
+		try {
+				await fs.access(this.filePath);
 				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
 				const response = await axios({
 					url: url,
@@ -90,27 +86,15 @@ export class YahooSports {
 						Authorization: `Bearer ${tokenData.access_token}`,
 					},
 					timeout: 10000,
-				}).then(async (res) => {
-					return this.parser.parse(res.data);
-				}).catch((err) => {
-					if(err?.response?.data?.error?.description?.includes('token_expired')){
-						this.refreshToken();
-						this.callApi(url);
-					}
-					else {
-						throw err;
-					}
 				});
-				console.log(response); // but it's undefined here
-				return response;
-			})
-			.catch(async (err) => {
-				if(err.message.includes('No such file or directory')){
-					console.error(`Error in callApi(): File path ${this.filePath} does not exist.`);
-				}
-				else {
-					console.error(`Error in callApi(): ${err}`);
-				}
-			});
+				return this.parser.parse(response.data);
+		} catch (error) {
+			if(error.message.includes('No such file or directory')){
+				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
+			}
+			else {
+				console.error(`Error in refreshToken(): ${error}`);
+			}
+		}
 	}
 }
