@@ -3,19 +3,22 @@
 import { expect, test } from "bun:test";
 import { YahooSports } from "../src/yahoo";
 import { promises as fs } from 'fs';
+const config = {
+	key: process.env.YAHOO_TEST_CLIENT_KEY || '',
+	secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',
+	authorizationCode: process.env.YAHOO_TEST_AUTHORIZATION_CODE || '',
+};
+const fileInfo = {
+	filePath: './temp/test',
+	fileName: 'test.token.json',
+};
+const yahoo = new YahooSports(config, fileInfo);
+const fullPath = `${fileInfo.filePath}/${fileInfo.fileName}`;
 
 test("Get Token", async () => {
-	const config = {
-		key: process.env.YAHOO_TEST_CLIENT_KEY || '',
-		secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',
-		authorizationCode: process.env.YAHOO_TEST_AUTHORIZATION_CODE || '',
-	};
-
-	const yahoo = new YahooSports(config, './temp/test.token.json');
-
 	await yahoo.getToken();
 
-	const tokenData = JSON.parse(await fs.readFile('./temp/test.token.json', 'utf8'));
+	const tokenData = JSON.parse(await fs.readFile(fullPath, 'utf8'));
 
 	expect(tokenData).toHaveProperty('access_token');
 	expect(tokenData).toHaveProperty('refresh_token');
@@ -26,17 +29,9 @@ test("Get Token", async () => {
 });
 
 test("Refresh Token", async () => {
-	const config = {
-		key: process.env.YAHOO_TEST_CLIENT_KEY || '',
-		secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',
-		authorizationCode: process.env.YAHOO_TEST_AUTHORIZATION_CODE || '',
-	};
-
-	const yahoo = new YahooSports(config, './temp/test.token.json');
-
 	await yahoo.refreshToken();
 
-	const tokenData = JSON.parse(await fs.readFile('./temp/test.token.json', 'utf8'));
+	const tokenData = JSON.parse(await fs.readFile(fullPath, 'utf8'));
 
 	expect(tokenData).toHaveProperty('access_token');
 	expect(tokenData).toHaveProperty('refresh_token');
