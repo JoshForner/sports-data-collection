@@ -49,7 +49,7 @@ export class YahooSports {
 		});
 	}
 
-	async refreshAuthorizationToken() {
+	async refreshToken() {
 		const tokenData = JSON.parse(fs.readFileSync(this.filePath, 'utf8'));
 		return axios({
 			url: this.url,
@@ -65,7 +65,7 @@ export class YahooSports {
 			fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
 			console.log(`Token saved to ${this.filePath}`);
 		}).catch((err) => {
-			console.error(`Error in refreshAuthorizationToken(): ${err}`);
+			console.error(`Error in refreshToken(): ${err}`);
 		});
 	}
 }

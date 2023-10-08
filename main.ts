@@ -7,7 +7,7 @@ async function main() {
 
 	// const token = await yahoo.getToken();
 
-	await yahoo.refreshAuthorizationToken();
+	await yahoo.refreshToken();
 }
 
 main();
