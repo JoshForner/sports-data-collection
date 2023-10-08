@@ -11,6 +11,6 @@ Install dependencies
 Run the main file
 
 ```bash
-  bun run main.ts
+  bun start
 ```
 

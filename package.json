@@ -5,7 +5,8 @@
   "author": "Josh Forner",
   "license": "MIT",
   "scripts": {
-    "lint": "yarn eslint ."
+    "lint": "bun eslint .",
+    "start": "bun lint && bun main.ts"
   },
   "dependencies": {
     "axios": "^1.5.1",
