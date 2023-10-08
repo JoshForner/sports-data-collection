@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { promises as fs } from 'fs';
+import { XMLParser } from 'fast-xml-parser';
 export class YahooSports {
 	client: {
 		key: string;
@@ -13,6 +14,7 @@ export class YahooSports {
 	};
 	filePath: string = './temp/token.json';
 	url: string = 'https://api.login.yahoo.com/oauth2/get_token';
+	parser: XMLParser = new XMLParser();
 
 	constructor(client: { key: string; secret: string; authorizationCode: string; }, filePath?: string) {
 		this.client = client;
@@ -47,7 +49,7 @@ export class YahooSports {
 	}
 
 	async refreshToken() {
-		fs.access(this.filePath)
+		await fs.access(this.filePath)
 			.then(async () => {
 				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
 				return axios({
@@ -69,6 +71,35 @@ export class YahooSports {
 			})
 			.catch(async () => {
 				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
+			});
+	}
+
+	async callApi(url: string) {
+		await fs.access(this.filePath)
+			.then(async () => {
+				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
+				return await axios({
+					url: url,
+					method: 'get',
+					headers: {
+						Authorization: `Bearer ${tokenData.access_token}`,
+					},
+					timeout: 10000,
+				}).then(async (res) => {
+					console.log(this.parser.parse(res.data)); // it has data here
+					return this.parser.parse(res.data);
+				}).catch((err) => {
+					if(err.response.data.error.description.includes('token_expired')){
+						this.refreshToken();
+						this.callApi(url);
+					}
+					else {
+						console.error(`Error in callApi(): ${err}`);
+					}
+				});
+			})
+			.catch(async () => {
+				console.error(`Error in callApi(): File path ${this.filePath} does not exist.`);
 			});
 	}
 }

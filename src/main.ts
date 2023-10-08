@@ -10,7 +10,11 @@ async function main() {
 
 	// await yahoo.getToken();
 
-	await yahoo.refreshToken();
+	//await yahoo.refreshToken();
+
+	const url = 'https://fantasysports.yahooapis.com/fantasy/v2/game/nfl';
+	const res = await yahoo.callApi(url);
+	console.log(res); // why is this undefined?
 }
 
 main();
