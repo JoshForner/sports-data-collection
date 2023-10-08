@@ -8,6 +8,9 @@
     "lint": "yarn eslint ."
   },
   "dependencies": {
+    "axios": "^1.5.1",
+    "passport-oauth2": "^1.7.0",
+    "qs": "^6.11.2",
     "simple-oauth2": "^5.0.0"
   },
   "devDependencies": {
