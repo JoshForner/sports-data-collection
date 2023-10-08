@@ -14,7 +14,7 @@ Run the main file
   bun start
 ```
 
-Running tests \
+## Running tests
 Currently you have to make new API credentials each time you run the tests for it to work.
 
 ```bash
