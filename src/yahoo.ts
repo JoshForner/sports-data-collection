@@ -47,22 +47,28 @@ export class YahooSports {
 	}
 
 	async refreshToken() {
-		const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
-		return axios({
-			url: this.url,
-			method: 'post',
-			headers: this.headers,
-			data: qs.stringify({
-				redirect_uri: 'oob',
-				grant_type: 'refresh_token',
-				refresh_token: tokenData.refresh_token,
-			}),
-			timeout: 10000,
-		}).then(async (res) => {
-			await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"
-			)).catch((err) => {
-				console.error(`Error in refreshToken(): ${err}`);
+		fs.access(this.filePath)
+			.then(async () => {
+				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
+				return axios({
+					url: this.url,
+					method: 'post',
+					headers: this.headers,
+					data: qs.stringify({
+						redirect_uri: 'oob',
+						grant_type: 'refresh_token',
+						refresh_token: tokenData.refresh_token,
+					}),
+					timeout: 10000,
+				}).then(async (res) => {
+					await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"
+					)).catch((err) => {
+						console.error(`Error in refreshToken(): ${err}`);
+					});
+				});
+			})
+			.catch(async () => {
+				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
 			});
-		});
 	}
 }

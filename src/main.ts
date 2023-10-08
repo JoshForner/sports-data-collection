@@ -8,7 +8,7 @@ async function main() {
 
 	const yahoo = new YahooSports(config);
 
-	// const token = await yahoo.getToken();
+	// await yahoo.getToken();
 
 	await yahoo.refreshToken();
 }
