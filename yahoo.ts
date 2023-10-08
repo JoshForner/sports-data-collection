@@ -5,6 +5,7 @@ export class YahooSports {
 	client: {
 		key: string;
 		secret: string;
+		authorizationCode: string;
 	};
 	headers: {
 		Authorization: string;
@@ -13,12 +14,9 @@ export class YahooSports {
 	filePath: string = './temp/token.json';
 	url: string = 'https://api.login.yahoo.com/oauth2/get_token';
 
-	constructor(clientKey: string, clientSecret: string, filePath?: string) {
-		this.client = {
-			key: clientKey,
-			secret: clientSecret,
-		};
-		const authHeader = Buffer.from(`${clientKey}:${clientSecret}`, `binary`).toString(`base64`);
+	constructor(client: { key: string; secret: string; authorizationCode: string; }, filePath?: string) {
+		this.client = client;
+		const authHeader = Buffer.from(`${client.key}:${client.secret}`, `binary`).toString(`base64`);
 		this.headers = {
 			Authorization: `Basic ${authHeader}`,
 			ContentType: 'application/x-www-form-urlencoded',
