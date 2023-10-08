@@ -43,7 +43,7 @@ export class YahooSports {
 				}),
 				timeout: 10000,
 			});
-		await fs.writeFile(this.filePath, JSON.stringify(response.data, null, "\t"));
+			await fs.writeFile(this.filePath, JSON.stringify(response.data, null, "\t"));
 		} catch (error) {
 			console.error(`Error in getToken(): ${error}`);
 		}
@@ -66,7 +66,7 @@ export class YahooSports {
 			});
 			await fs.writeFile(this.filePath, JSON.stringify(response.data, null, "\t"));
 		} catch (error) {
-			if(error.message.includes('No such file or directory')){
+			if (error.message.includes('No such file or directory')) {
 				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
 			}
 			else {
@@ -77,19 +77,19 @@ export class YahooSports {
 
 	async callApi(url: string) {
 		try {
-				await fs.access(this.filePath);
-				const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
-				const response = await axios({
-					url: url,
-					method: 'get',
-					headers: {
-						Authorization: `Bearer ${tokenData.access_token}`,
-					},
-					timeout: 10000,
-				});
-				return this.parser.parse(response.data);
+			await fs.access(this.filePath);
+			const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
+			const response = await axios({
+				url: url,
+				method: 'get',
+				headers: {
+					Authorization: `Bearer ${tokenData.access_token}`,
+				},
+				timeout: 10000,
+			});
+			return this.parser.parse(response.data);
 		} catch (error) {
-			if(error.message.includes('No such file or directory')){
+			if (error.message.includes('No such file or directory')) {
 				console.error(`Error in refreshToken(): File path ${this.filePath} does not exist.`);
 			}
 			else {
