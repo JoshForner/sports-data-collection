@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import * as fs from "fs";
 export class YahooSports {
   client: {
     key: string;
@@ -32,7 +33,7 @@ export class YahooSports {
       }),
       timeout: 10000,
     }).then((res) => {
-      return res.data;
+      fs.writeFileSync('./temp/token.json', JSON.stringify(res.data));
     }).catch((err) => {
       console.error(`Error in getInitialAuthorization(): ${err}`);
     });
@@ -53,7 +54,7 @@ export class YahooSports {
       }),
       timeout: 10000,
     }).then((res) => {
-      return res.data;
+      fs.writeFileSync('./temp/token.json', JSON.stringify(res.data));
     }).catch((err) => {
       console.error(`Error in refreshAuthorizationToken(): ${err}`);
     });
