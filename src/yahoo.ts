@@ -12,20 +12,18 @@ export class YahooSports {
 		Authorization: string;
 		ContentType: string;
 	};
-	filePath: string = './temp/token.json';
+	filePath: string;
 	url: string = 'https://api.login.yahoo.com/oauth2/get_token';
 	parser: XMLParser = new XMLParser();
 
-	constructor(client: { key: string; secret: string; authorizationCode: string; }, filePath?: string) {
+	constructor(client: { key: string; secret: string; authorizationCode: string; }, filePath: string) {
 		this.client = client;
 		const authHeader = Buffer.from(`${client.key}:${client.secret}`, `binary`).toString(`base64`);
 		this.headers = {
 			Authorization: `Basic ${authHeader}`,
 			ContentType: 'application/x-www-form-urlencoded',
 		};
-		if (filePath) {
-			this.filePath = filePath;
-		}
+		this.filePath = filePath;
 	}
 
 	async getToken() {
