@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"scripts": {
 		"lint": "bun eslint --fix .",
-		"start": "bun lint && bun main.ts"
+		"start": "bun lint && bun src/main.ts"
 	},
 	"dependencies": {
 		"axios": "^1.5.1",
