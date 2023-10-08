@@ -1,4 +1,4 @@
-export type StatsCategoryResponse = {
+export type StatsCategory = {
 	xml:            string;
 	fantasyContent: FantasyContent;
 }
