@@ -35,7 +35,7 @@ export class YahooSports {
 				client_id: this.client.key,
 				client_secret: this.client.secret,
 				redirect_uri: 'oob',
-				code: process.env.YAHOO_AUTHORIZATION_CODE,
+				code: this.client.authorizationCode,
 				grant_type: 'authorization_code',
 			}),
 			timeout: 10000,
