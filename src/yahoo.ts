@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import * as fs from "fs";
+import { promises as fs } from 'fs';
 export class YahooSports {
 	client: {
 		key: string;
@@ -39,15 +39,15 @@ export class YahooSports {
 				grant_type: 'authorization_code',
 			}),
 			timeout: 10000,
-		}).then((res) => {
-			fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
+		}).then(async (res) => {
+			await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"));
 		}).catch((err) => {
-			console.error(`Error in getInitialAuthorization(): ${err}`);
+			console.error(`Error in getToken(): ${err}`);
 		});
 	}
 
 	async refreshToken() {
-		const tokenData = JSON.parse(fs.readFileSync(this.filePath, 'utf8'));
+		const tokenData = JSON.parse(await fs.readFile(this.filePath, 'utf8'));
 		return axios({
 			url: this.url,
 			method: 'post',
@@ -58,10 +58,11 @@ export class YahooSports {
 				refresh_token: tokenData.refresh_token,
 			}),
 			timeout: 10000,
-		}).then((res) => {
-			fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
-		}).catch((err) => {
-			console.error(`Error in refreshToken(): ${err}`);
+		}).then(async (res) => {
+			await fs.writeFile(this.filePath, JSON.stringify(res.data, null, "\t"
+			)).catch((err) => {
+				console.error(`Error in refreshToken(): ${err}`);
+			});
 		});
 	}
 }
