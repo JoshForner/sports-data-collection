@@ -2,13 +2,14 @@ import { YahooSports } from "./yahoo";
 
 export class YahooSportsWrapper {
 	yahoo: YahooSports;
-	filePath: string = './temp/token.json';
+	fileInfo: {
+		filePath: string;
+		fileName: string;
+	};
 
-	constructor(config: { key: string; secret: string; authorizationCode: string; }, filePath?: string) {
-		if (filePath) {
-			this.filePath = filePath;
-		}
-		this.yahoo = new YahooSports(config, this.filePath);
+	constructor(config: { key: string; secret: string; authorizationCode: string; }, fileInfo?: { filePath: string; fileName: string; }) {
+		this.fileInfo = fileInfo || { filePath: './temp', fileName: 'token.json' };
+		this.yahoo = new YahooSports(config, this.fileInfo);
 	}
 
 	async getToken() {
