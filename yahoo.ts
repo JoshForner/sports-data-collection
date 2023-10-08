@@ -41,7 +41,6 @@ export class YahooSports {
 			timeout: 10000,
 		}).then((res) => {
 			fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
-			console.log('Token saved to ./temp/token.json');
 		}).catch((err) => {
 			console.error(`Error in getInitialAuthorization(): ${err}`);
 		});
@@ -61,7 +60,6 @@ export class YahooSports {
 			timeout: 10000,
 		}).then((res) => {
 			fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
-			console.log(`Token saved to ${this.filePath}`);
 		}).catch((err) => {
 			console.error(`Error in refreshToken(): ${err}`);
 		});
