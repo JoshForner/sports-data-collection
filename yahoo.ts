@@ -10,6 +10,7 @@ export class YahooSports {
       tokenHost: string;
     };
   };
+  authHeader: string;
 
   constructor(clientKey: string, clientSecret: string) {
     this.config = {
@@ -21,6 +22,7 @@ export class YahooSports {
         tokenHost: 'https://api.login.yahoo.com'
       }
     };
+    this.authHeader = Buffer.from(`${clientKey}:${clientSecret}`, `binary`).toString(`base64`);
   }
 
   async getToken() {
@@ -33,7 +35,13 @@ export class YahooSports {
     };
 
     try {
-      const accessToken = await client.getToken(tokenParams);
+      const accessToken = await client.getToken(tokenParams,{
+        headers: {
+          'Authorization': `Basic ${this.authHeader}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
+        },
+      });
       console.log(accessToken);
     } catch (error) {
       console.log('Access Token Error', error);
