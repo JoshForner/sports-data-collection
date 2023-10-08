@@ -3,6 +3,7 @@
 import { expect, test } from "bun:test";
 import { YahooSports } from "../src/yahoo";
 import { promises as fs } from 'fs';
+
 const config = {
 	key: process.env.YAHOO_TEST_CLIENT_KEY || '',
 	secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',

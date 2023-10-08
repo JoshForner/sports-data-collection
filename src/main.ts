@@ -1,4 +1,5 @@
 import { YahooSportsWrapper } from "./yahoo-wrapper";
+import { promises as fs } from 'fs';
 
 async function main() {
 	const config = {
@@ -9,7 +10,7 @@ async function main() {
 
 	const yahoo = new YahooSportsWrapper(config);
 
-	console.log(await yahoo.getStatCategories('mlb'));
+	await fs.writeFile('./yahoo-info/nfl.stat_categories.json', JSON.stringify(await yahoo.getStatCategories('nfl'), null, "\t"));
 }
 
 main();
