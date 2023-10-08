@@ -1,5 +1,5 @@
-
 ## Run Locally
+
 This Project uses Bun download it [here](https://bun.sh/)
 
 Install dependencies
@@ -13,4 +13,3 @@ Run the main file
 ```bash
   bun start
 ```
-

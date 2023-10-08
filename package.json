@@ -1,22 +1,22 @@
 {
-  "name": "sports-data-collection",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "author": "Josh Forner",
-  "license": "MIT",
-  "scripts": {
-    "lint": "bun eslint --fix .",
-    "start": "bun lint && bun main.ts"
-  },
-  "dependencies": {
-    "axios": "^1.5.1",
-    "qs": "^6.11.2"
-  },
-  "devDependencies": {
-    "@types/node": "^20.8.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.51.0",
-    "typescript": "^5.2.2"
-  }
+	"name": "sports-data-collection",
+	"version": "1.0.0",
+	"main": "index.ts",
+	"author": "Josh Forner",
+	"license": "MIT",
+	"scripts": {
+		"lint": "bun eslint --fix .",
+		"start": "bun lint && bun main.ts"
+	},
+	"dependencies": {
+		"axios": "^1.5.1",
+		"qs": "^6.11.2"
+	},
+	"devDependencies": {
+		"@types/node": "^20.8.3",
+		"@typescript-eslint/eslint-plugin": "^6.7.4",
+		"@typescript-eslint/parser": "^6.7.4",
+		"eslint": "^8.51.0",
+		"typescript": "^5.2.2"
+	}
 }
