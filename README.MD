@@ -13,3 +13,10 @@ Run the main file
 ```bash
   bun start
 ```
+
+Running tests \
+Currently you have to make new API credentials each time you run the tests for it to work.
+
+```bash
+	bun test
+```

@@ -6,9 +6,9 @@ import { promises as fs } from 'fs';
 
 test("Get Token", async () => {
 	const config = {
-		key: process.env.YAHOO_CLIENT_KEY || '',
-		secret: process.env.YAHOO_CLIENT_SECRET || '',
-		authorizationCode: process.env.YAHOO_AUTHORIZATION_CODE || '',
+		key: process.env.YAHOO_TEST_CLIENT_KEY || '',
+		secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',
+		authorizationCode: process.env.YAHOO_TEST_AUTHORIZATION_CODE || '',
 	};
 
 	const yahoo = new YahooSports(config, './temp/test.token.json');
@@ -27,9 +27,9 @@ test("Get Token", async () => {
 
 test("Refresh Token", async () => {
 	const config = {
-		key: process.env.YAHOO_CLIENT_KEY2 || '',
-		secret: process.env.YAHOO_CLIENT_SECRET2 || '',
-		authorizationCode: process.env.YAHOO_AUTHORIZATION_CODE2 || '',
+		key: process.env.YAHOO_TEST_CLIENT_KEY || '',
+		secret: process.env.YAHOO_TEST_CLIENT_SECRET || '',
+		authorizationCode: process.env.YAHOO_TEST_AUTHORIZATION_CODE || '',
 	};
 
 	const yahoo = new YahooSports(config, './temp/test.token.json');
