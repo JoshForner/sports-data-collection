@@ -1,4 +1,4 @@
-import { YahooSports } from "./temp";
+import { YahooSports } from "./yahoo";
 async function main() {
   const yahoo = new YahooSports(
     process.env.YAHOO_CLIENT_KEY || '',
@@ -6,10 +6,8 @@ async function main() {
   );
 
   // const token = await yahoo.getToken();
-  // console.log(token);
 
-  const refresh = await yahoo.refreshAuthorizationToken(process.env.YAHOO_REFRESH_TOKEN || '');
-  console.log(refresh);
+  await yahoo.refreshAuthorizationToken();
 }
 
 main();
