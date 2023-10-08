@@ -1,0 +1,204 @@
+{
+	"?xml": "",
+	"fantasy_content": {
+		"game": {
+			"game_key": 423,
+			"game_id": 423,
+			"name": "Football",
+			"code": "nfl",
+			"type": "full",
+			"url": "https://football.fantasysports.yahoo.com/f1",
+			"season": 2023,
+			"is_registration_over": 0,
+			"is_game_over": 0,
+			"is_offseason": 0,
+			"advanced_stat_categories": {
+				"glossary_url": "https://football.fantasysports.yahoo.com/f1/advancedstats",
+				"stats": {
+					"stat": [
+						{
+							"stat_id": 1001,
+							"name": "Passing Air Yards",
+							"display_name": "AirYds",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1002,
+							"name": "Passing Pocket Time",
+							"display_name": "PckTme",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1003,
+							"name": "Average Passing Pocket Time",
+							"display_name": "AvgPkt",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1004,
+							"name": "Receiving Air Yards",
+							"display_name": "AirYds",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1005,
+							"name": "Receiving Yards After Catch",
+							"display_name": "YAC",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1006,
+							"name": "Receiving Yards After Contact",
+							"display_name": "YACON",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1007,
+							"name": "Receiving Broken Tackles",
+							"display_name": "BrkTkl",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1008,
+							"name": "Receiving Red Zone Targets",
+							"display_name": "RZTar",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1009,
+							"name": "Rushing Yards After Contact",
+							"display_name": "YACON",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1010,
+							"name": "Rushing Broken Tackles",
+							"display_name": "BrkTkl",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1011,
+							"name": "Rushing Red Zone Attempts",
+							"display_name": "RZAtt",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1012,
+							"name": "Rushing Tackled For Loss",
+							"display_name": "RuTFL",
+							"sort_order": 0,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1013,
+							"name": "Rushing Tackled For Loss Yards",
+							"display_name": "RuTFLY",
+							"sort_order": 0,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "O",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1014,
+							"name": "Blitzes",
+							"display_name": "Blitz",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "DP",
+									"is_only_display_stat": 1
+								}
+							}
+						},
+						{
+							"stat_id": 1015,
+							"name": "Pass Targets",
+							"display_name": "Tgts",
+							"sort_order": 1,
+							"stat_position_types": {
+								"stat_position_type": {
+									"position_type": "DP",
+									"is_only_display_stat": 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	}
+}

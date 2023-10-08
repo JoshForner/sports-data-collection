@@ -2,8 +2,6 @@ import axios from 'axios';
 import qs from 'qs';
 import { promises as fs } from 'fs';
 import { XMLParser } from 'fast-xml-parser';
-import { StatsCategory } from '../types/StatsCategory';
-import { AdvancedStatsCategory } from '../types/AdvancedStatsCategory';
 export class YahooSports {
 	client: {
 		key: string;
@@ -132,8 +130,8 @@ export class YahooSports {
 		try {
 			const statsUrl = `https://fantasysports.yahooapis.com/fantasy/v2/game/${sport}/stat_categories`;
 			const advancedStatsUrl = `https://fantasysports.yahooapis.com/fantasy/v2/game/${sport}/advanced_stat_categories`;
-			const statsRes = await this.callApi(statsUrl) as StatsCategory;
-			const advancedStatsRes = await this.callApi(advancedStatsUrl) as AdvancedStatsCategory;
+			const statsRes = await this.callApi(statsUrl);
+			const advancedStatsRes = await this.callApi(advancedStatsUrl);
 			await fs.writeFile(
 				`./${this.fileInfo.filePath}/${sport}.stat_categories.json`,
 				JSON.stringify(
