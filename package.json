@@ -5,7 +5,7 @@
   "author": "Josh Forner",
   "license": "MIT",
   "scripts": {
-    "lint": "bun eslint .",
+    "lint": "bun eslint --fix .",
     "start": "bun lint && bun main.ts"
   },
   "dependencies": {

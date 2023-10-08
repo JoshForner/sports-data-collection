@@ -6,48 +6,55 @@ export class YahooSports {
     key: string;
     secret: string;
   };
-  authHeader: string;
+  headers: {
+    Authorization: string;
+    ContentType: string;
+  };
+  filePath: string = './temp/token.json';
+  url: string = 'https://api.login.yahoo.com/oauth2/get_token';
 
-  constructor(clientKey: string, clientSecret: string) {
-      this.client= {
-        key: clientKey,
-        secret: clientSecret,
-      };
-    this.authHeader = Buffer.from(`${clientKey}:${clientSecret}`, `binary`).toString(`base64`);
+  constructor(clientKey: string, clientSecret: string, filePath?: string) {
+    this.client = {
+      key: clientKey,
+      secret: clientSecret,
+    };
+    const authHeader = Buffer.from(`${clientKey}:${clientSecret}`, `binary`).toString(`base64`);
+    this.headers = {
+      Authorization: `Basic ${authHeader}`,
+      ContentType: 'application/x-www-form-urlencoded',
+    };
+    if (filePath) {
+      this.filePath = filePath;
+    }
   }
 
   async getToken() {
     return axios({
-      url: `https://api.login.yahoo.com/oauth2/get_token`,
+      url: this.url,
       method: 'post',
-      headers: {
-        'Authorization': `Basic ${this.authHeader}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: this.headers,
       data: qs.stringify({
         client_id: this.client.key,
         client_secret: this.client.secret,
         redirect_uri: 'oob',
         code: process.env.YAHOO_AUTHORIZATION_CODE,
-        grant_type: 'authorization_code'
+        grant_type: 'authorization_code',
       }),
       timeout: 10000,
     }).then((res) => {
-      fs.writeFileSync('./temp/token.json', JSON.stringify(res.data, null, "\t"));
+      fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
+      console.log('Token saved to ./temp/token.json');
     }).catch((err) => {
       console.error(`Error in getInitialAuthorization(): ${err}`);
     });
   }
 
   async refreshAuthorizationToken() {
-    const tokenData = JSON.parse(fs.readFileSync('./temp/token.json', 'utf8'));
+    const tokenData = JSON.parse(fs.readFileSync(this.filePath, 'utf8'));
     return axios({
-      url: `https://api.login.yahoo.com/oauth2/get_token`,
+      url: this.url,
       method: 'post',
-      headers: {
-        'Authorization': `Basic ${this.authHeader}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: this.headers,
       data: qs.stringify({
         redirect_uri: 'oob',
         grant_type: 'refresh_token',
@@ -55,7 +62,8 @@ export class YahooSports {
       }),
       timeout: 10000,
     }).then((res) => {
-      fs.writeFileSync('./temp/token.json', JSON.stringify(res.data, null, "\t"));
+      fs.writeFileSync(this.filePath, JSON.stringify(res.data, null, "\t"));
+      console.log(`Token saved to ${this.filePath}`);
     }).catch((err) => {
       console.error(`Error in refreshAuthorizationToken(): ${err}`);
     });
