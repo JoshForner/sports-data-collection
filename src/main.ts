@@ -1,4 +1,4 @@
-import { YahooSportsWrapper } from "./yahoo-wrapper";
+import { YahooSportsWrapper } from './YahooWrapper';
 import { promises as fs } from 'fs';
 
 async function main() {
@@ -10,7 +10,8 @@ async function main() {
 
 	const yahoo = new YahooSportsWrapper(config);
 
-	await fs.writeFile('./yahoo-info/nfl.stat_categories.json', JSON.stringify(await yahoo.getStatCategories('nfl'), null, "\t"));
+	await yahoo.generateStatCategories('nfl');
+	await fs.writeFile('./yahoo-info/nfl.josh_allen.json', JSON.stringify(await yahoo.getPlayerStats('423.p.30977'), null, '\t'));
 }
 
 main();

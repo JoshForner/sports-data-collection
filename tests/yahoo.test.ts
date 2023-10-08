@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { expect, test } from "bun:test";
-import { YahooSports } from "../src/yahoo";
+import { expect, test } from 'bun:test';
+import { YahooSports } from '../src/yahoo';
 import { promises as fs } from 'fs';
 
 const config = {
@@ -16,7 +16,7 @@ const fileInfo = {
 const yahoo = new YahooSports(config, fileInfo);
 const fullPath = `${fileInfo.filePath}/${fileInfo.fileName}`;
 
-test("Get Token", async () => {
+test('Get Token', async () => {
 	await yahoo.getToken();
 
 	const tokenData = JSON.parse(await fs.readFile(fullPath, 'utf8'));
@@ -29,7 +29,7 @@ test("Get Token", async () => {
 	expect(tokenData.token_type).toBe('bearer');
 });
 
-test("Refresh Token", async () => {
+test('Refresh Token', async () => {
 	await yahoo.refreshToken();
 
 	const tokenData = JSON.parse(await fs.readFile(fullPath, 'utf8'));

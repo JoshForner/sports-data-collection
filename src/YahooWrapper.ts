@@ -1,4 +1,4 @@
-import { YahooSports } from "./yahoo";
+import { YahooSports } from './Yahoo';
 
 export class YahooSportsWrapper {
 	yahoo: YahooSports;
@@ -24,9 +24,13 @@ export class YahooSportsWrapper {
 		return await this.yahoo.callApi(url);
 	}
 
-	async getStatCategories(sport: string) {
-		const url = `https://fantasysports.yahooapis.com/fantasy/v2/game/${sport}/stat_categories`;
+	async generateStatCategories(sport: string) {
+		await this.yahoo.generateStatCategories(sport);
+	}
+
+	async getPlayerStats(playerKey: string) {
+		const url = `https://fantasysports.yahooapis.com/fantasy/v2/player/${playerKey}/stats`;
 		const res = await this.yahoo.callApi(url);
-		return res.fantasy_content.game.stat_categories.stats;
+		return res;
 	}
 }

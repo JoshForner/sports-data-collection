@@ -2,6 +2,8 @@ import axios from 'axios';
 import qs from 'qs';
 import { promises as fs } from 'fs';
 import { XMLParser } from 'fast-xml-parser';
+import { StatsCategoryResponse } from '../types/StatsCategoryResponse';
+import { AdvancedStatsCategoryResponse } from '../types/AdvancedStatsCategoryResponse';
 export class YahooSports {
 	client: {
 		key: string;
@@ -20,9 +22,22 @@ export class YahooSports {
 	fullPath: string;
 	parser: XMLParser = new XMLParser();
 
-	constructor(client: { key: string; secret: string; authorizationCode: string; }, fileInfo: { filePath: string; fileName: string; }) {
+	constructor(
+		client: {
+			key: string;
+			secret: string;
+			authorizationCode: string;
+		},
+		fileInfo: {
+			filePath: string;
+			fileName: string;
+		}
+	) {
 		this.client = client;
-		const authHeader = Buffer.from(`${client.key}:${client.secret}`, `binary`).toString(`base64`);
+		const authHeader = Buffer.from(
+			`${client.key}:${client.secret}`,
+			'binary'
+		).toString('base64');
 		this.headers = {
 			Authorization: `Basic ${authHeader}`,
 			ContentType: 'application/x-www-form-urlencoded',
@@ -47,7 +62,10 @@ export class YahooSports {
 				}),
 				timeout: 10000,
 			});
-			await fs.writeFile(this.fullPath, JSON.stringify(response.data, null, "\t"));
+			await fs.writeFile(
+				this.fullPath,
+				JSON.stringify(response.data, null, '\t')
+			);
 		} catch (error) {
 			console.error(`Error in getToken(): ${error}`);
 		}
@@ -68,12 +86,16 @@ export class YahooSports {
 				}),
 				timeout: 10000,
 			});
-			await fs.writeFile(this.fullPath, JSON.stringify(response.data, null, "\t"));
+			await fs.writeFile(
+				this.fullPath,
+				JSON.stringify(response.data, null, '\t')
+			);
 		} catch (error) {
 			if (error.message.includes('No such file or directory')) {
-				console.error(`Error in refreshToken(): File path ${this.fullPath} does not exist.`);
-			}
-			else {
+				console.error(
+					`Error in refreshToken(): File path ${this.fullPath} does not exist.`
+				);
+			} else {
 				console.error(`Error in refreshToken(): ${error}`);
 			}
 		}
@@ -93,12 +115,43 @@ export class YahooSports {
 			});
 			return this.parser.parse(response.data);
 		} catch (error) {
-			if (error.message.includes('No such file or directory')) {
-				console.error(`Error in callApi(): File path ${this.fullPath} does not exist.`);
-			}
-			else {
+			if (error.response.status === 401) {
+				this.refreshToken();
+				this.callApi(url);
+			} else if (error.message.includes('No such file or directory')) {
+				console.error(
+					`Error in callApi(): File path ${this.fullPath} does not exist.`
+				);
+			} else {
 				console.error(`Error in callApi(): ${error}`);
 			}
+		}
+	}
+
+	async generateStatCategories(sport: string) {
+		try {
+			const statsUrl = `https://fantasysports.yahooapis.com/fantasy/v2/game/${sport}/stat_categories`;
+			const advancedStatsUrl = `https://fantasysports.yahooapis.com/fantasy/v2/game/${sport}/advanced_stat_categories`;
+			const statsRes = await this.callApi(statsUrl) as StatsCategoryResponse;
+			const advancedStatsRes = await this.callApi(advancedStatsUrl) as AdvancedStatsCategoryResponse;
+			await fs.writeFile(
+				`./${this.fileInfo.filePath}/${sport}.stat_categories.json`,
+				JSON.stringify(
+					statsRes,
+					null,
+					'\t'
+				)
+			);
+			await fs.writeFile(
+				`./${this.fileInfo.filePath}/${sport}.advanced_stat_categories.json`,
+				JSON.stringify(
+					advancedStatsRes,
+					null,
+					'\t'
+				)
+			);
+		} catch (error) {
+			console.error(`Error in generateStatCategories(): ${error}`);
 		}
 	}
 }
