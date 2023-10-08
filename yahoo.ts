@@ -36,7 +36,7 @@ export class YahooSports {
       const accessToken = await client.getToken(tokenParams);
       console.log(accessToken);
     } catch (error) {
-      console.log('Access Token Error', error.message);
+      console.log('Access Token Error', error);
     }
   }
 }
