@@ -1,8 +1,9 @@
+import { XMLParser } from 'fast-xml-parser';
 import axios from 'axios';
 import qs from 'qs';
 import { promises as fs } from 'fs';
-import { XMLParser } from 'fast-xml-parser';
-export class YahooSports {
+
+export class YahooApiInterface {
 	client: {
 		key: string;
 		secret: string;

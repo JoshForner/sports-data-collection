@@ -1,15 +1,18 @@
-import { YahooSports } from './Yahoo';
+import { YahooApiInterface } from './YahooApiInterface';
 
 export class YahooSportsWrapper {
-	yahoo: YahooSports;
+	yahoo: YahooApiInterface;
 	fileInfo: {
 		filePath: string;
 		fileName: string;
 	};
 
-	constructor(config: { key: string; secret: string; authorizationCode: string; }, fileInfo?: { filePath: string; fileName: string; }) {
+	constructor(
+		config: { key: string; secret: string; authorizationCode: string },
+		fileInfo?: { filePath: string; fileName: string }
+	) {
 		this.fileInfo = fileInfo || { filePath: './temp', fileName: 'token.json' };
-		this.yahoo = new YahooSports(config, this.fileInfo);
+		this.yahoo = new YahooApiInterface(config, this.fileInfo);
 	}
 
 	async getToken() {
