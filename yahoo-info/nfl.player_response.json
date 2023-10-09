@@ -46,31 +46,31 @@
 					"stat": [
 						{
 							"stat_id": 0,
-							"value": 4
+							"value": 5
 						},
 						{
 							"stat_id": 1,
-							"value": 135
+							"value": 175
 						},
 						{
 							"stat_id": 2,
-							"value": 101
+							"value": 128
 						},
 						{
 							"stat_id": 3,
-							"value": 34
+							"value": 47
 						},
 						{
 							"stat_id": 4,
-							"value": 1048
+							"value": 1407
 						},
 						{
 							"stat_id": 5,
-							"value": 9
+							"value": 11
 						},
 						{
 							"stat_id": 6,
-							"value": 4
+							"value": 5
 						},
 						{
 							"stat_id": 7,
@@ -78,15 +78,15 @@
 						},
 						{
 							"stat_id": 8,
-							"value": 16
+							"value": 20
 						},
 						{
 							"stat_id": 9,
-							"value": 106
+							"value": 120
 						},
 						{
 							"stat_id": 10,
-							"value": 2
+							"value": 3
 						},
 						{
 							"stat_id": 11,
@@ -158,7 +158,7 @@
 						},
 						{
 							"stat_id": 79,
-							"value": 52
+							"value": 65
 						},
 						{
 							"stat_id": 80,
@@ -166,7 +166,7 @@
 						},
 						{
 							"stat_id": 81,
-							"value": 9
+							"value": 11
 						}
 					]
 				}
@@ -178,7 +178,7 @@
 					"stat": [
 						{
 							"stat_id": 1001,
-							"value": 594
+							"value": 879
 						},
 						{
 							"stat_id": 1002,
@@ -186,7 +186,7 @@
 						},
 						{
 							"stat_id": 1003,
-							"value": 2.19
+							"value": 1.73
 						},
 						{
 							"stat_id": 1004,
@@ -218,7 +218,7 @@
 						},
 						{
 							"stat_id": 1011,
-							"value": 7
+							"value": 8
 						},
 						{
 							"stat_id": 1012,

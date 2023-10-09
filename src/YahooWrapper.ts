@@ -1,5 +1,6 @@
 import { YahooApiInterface } from './YahooApiInterface';
 import { PlayerStatsMapper } from './PlayerStatsMapper';
+import { promises as fs } from 'fs';
 
 export class YahooSportsWrapper {
 	yahoo: YahooApiInterface;
@@ -8,6 +9,7 @@ export class YahooSportsWrapper {
 		filePath: string;
 		fileName: string;
 	};
+	baseUrl: string = 'https://fantasysports.yahooapis.com/fantasy/v2';
 
 	constructor(
 		config: { key: string; secret: string; authorizationCode: string },
@@ -34,8 +36,14 @@ export class YahooSportsWrapper {
 		await this.yahoo.generateStatCategories(sport);
 	}
 
+	async generatePlayerStats(playerKey: string) {
+		const url = `${this.baseUrl}/player/${playerKey}/stats`;
+		const res = await this.yahoo.callApi(url);
+		await fs.writeFile('./yahoo-info/nfl.player_response.json', JSON.stringify(res, null, '\t'));
+	}
+
 	async getPlayerStats(playerKey: string) {
-		const url = `https://fantasysports.yahooapis.com/fantasy/v2/player/${playerKey}/stats`;
+		const url = `${this.baseUrl}/player/${playerKey}/stats`;
 		const res = await this.yahoo.callApi(url);
 		return res;
 	}
