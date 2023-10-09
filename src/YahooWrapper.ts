@@ -1,7 +1,9 @@
 import { YahooApiInterface } from './YahooApiInterface';
+import { PlayerStatsMapper } from './PlayerStatsMapper';
 
 export class YahooSportsWrapper {
 	yahoo: YahooApiInterface;
+	statsMapper: PlayerStatsMapper;
 	fileInfo: {
 		filePath: string;
 		fileName: string;
@@ -13,6 +15,7 @@ export class YahooSportsWrapper {
 	) {
 		this.fileInfo = fileInfo || { filePath: './temp', fileName: 'token.json' };
 		this.yahoo = new YahooApiInterface(config, this.fileInfo);
+		this.statsMapper = new PlayerStatsMapper(this.fileInfo);
 	}
 
 	async getToken() {
