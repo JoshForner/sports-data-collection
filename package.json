@@ -1,5 +1,5 @@
 {
-	"name": "sports-data-collection",
+	"name": "yahoo-fantasy-wrapper",
 	"version": "1.0.0",
 	"main": "index.ts",
 	"author": "Josh Forner",

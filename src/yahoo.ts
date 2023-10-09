@@ -32,10 +32,7 @@ export class YahooSports {
 		}
 	) {
 		this.client = client;
-		const authHeader = Buffer.from(
-			`${client.key}:${client.secret}`,
-			'binary'
-		).toString('base64');
+		const authHeader = Buffer.from(`${client.key}:${client.secret}`, 'binary').toString('base64');
 		this.headers = {
 			Authorization: `Basic ${authHeader}`,
 			ContentType: 'application/x-www-form-urlencoded',

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { expect, test } from 'bun:test';
-import { YahooSports } from '../src/yahoo';
+import { YahooSportsWrapper } from '../src/YahooWrapper';
 import { promises as fs } from 'fs';
 
 const config = {
@@ -13,7 +13,7 @@ const fileInfo = {
 	filePath: './temp/test',
 	fileName: 'test.token.json',
 };
-const yahoo = new YahooSports(config, fileInfo);
+const yahoo = new YahooSportsWrapper(config, fileInfo);
 const fullPath = `${fileInfo.filePath}/${fileInfo.fileName}`;
 
 test('Get Token', async () => {
