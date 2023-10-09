@@ -112,8 +112,9 @@ export class YahooApiInterface {
 			return this.parser.parse(response.data);
 		} catch (error) {
 			if (error.response.status === 401) {
-				this.refreshToken();
-				this.callApi(url);
+				console.warn('Token expired. Refreshing token...');
+				await this.refreshToken();
+				await this.callApi(url);
 			} else if (error.message.includes('No such file or directory')) {
 				console.error(
 					`Error in callApi(): File path ${this.fullPath} does not exist.`
