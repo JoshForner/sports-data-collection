@@ -32,22 +32,27 @@
 		"eligible_positions": {
 			"position": "QB"
 		},
-		"player_stats": {
-			"season": 2023,
-			"stats": [
-				{
-					"stat_id": 0,
-					"name": "Passing Air Yards",
-					"display_name": "AirYds",
-					"value": 4
-				},
-				{
-					"stat_id": 0,
-					"name": "Passing Air Yards",
-					"display_name": "AirYds",
-					"value": 4
-				}
-			]
-		}
+		"has_player_notes": 1,
+		"has_recent_player_notes": 1,
+		"player_notes_last_timestamp": 1696790579,
+		"player_stats": [
+			{
+				"season": 2023,
+				"stats": [
+					{
+						"stat_id": 0,
+						"name": "Passing Air Yards",
+						"display_name": "AirYds",
+						"value": 4
+					},
+					{
+						"stat_id": 0,
+						"name": "Passing Air Yards",
+						"display_name": "AirYds",
+						"value": 4
+					}
+				]
+			}
+		]
 	}
 }

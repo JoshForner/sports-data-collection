@@ -3,25 +3,28 @@ export type Player = {
 }
 
 export type PlayerClass = {
-	playerKey:             string;
-	playerID:              number;
-	name:                  Name;
-	url:                   string;
-	editorialPlayerKey:    string;
-	editorialTeamKey:      string;
-	editorialTeamFullName: string;
-	editorialTeamAbbr:     string;
-	editorialTeamURL:      string;
-	byeWeeks:              ByeWeeks;
-	isKeeper:              IsKeeper;
-	uniformNumber:         number;
-	displayPosition:       string;
-	headshot:              Headshot;
-	imageURL:              string;
-	isUndroppable:         number;
-	positionType:          string;
-	eligiblePositions:     EligiblePositions;
-	playerStats:           PlayerStats;
+	playerKey:                string;
+	playerID:                 number;
+	name:                     Name;
+	url:                      string;
+	editorialPlayerKey:       string;
+	editorialTeamKey:         string;
+	editorialTeamFullName:    string;
+	editorialTeamAbbr:        string;
+	editorialTeamURL:         string;
+	byeWeeks:                 ByeWeeks;
+	isKeeper:                 IsKeeper;
+	uniformNumber:            number;
+	displayPosition:          string;
+	headshot:                 Headshot;
+	imageURL:                 string;
+	isUndroppable:            number;
+	positionType:             string;
+	eligiblePositions:        EligiblePositions;
+	hasPlayerNotes:           number;
+	hasRecentPlayerNotes:     number;
+	playerNotesLastTimestamp: number;
+	playerStats:              PlayerStat[];
 }
 
 export type ByeWeeks = {
@@ -48,7 +51,7 @@ export type Name = {
 	last:  string;
 }
 
-export type PlayerStats = {
+export type PlayerStat = {
 	season: number;
 	stats:  Stat[];
 }

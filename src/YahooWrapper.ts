@@ -39,7 +39,7 @@ export class YahooSportsWrapper {
 	async generatePlayerStats(playerKey: string) {
 		const url = `${this.baseUrl}/player/${playerKey}/stats`;
 		const res = await this.yahoo.callApi(url);
-		await fs.writeFile('./yahoo-info/nfl.player_response.json', JSON.stringify(res, null, '\t'));
+		await fs.writeFile('./yahoo-info/nfl.player_stats_response.json', JSON.stringify(res, null, '\t'));
 	}
 
 	async getPlayerStats(playerKey: string) {

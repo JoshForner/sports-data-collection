@@ -9,9 +9,9 @@ async function main() {
 
 	const yahoo = new YahooSportsWrapper(config);
 
-	// Generate the stat categories for the NFL
+	// Generate the stat categories for the current NFL Season
 	await yahoo.generateStatCategories('nfl');
-	// Generate a player's stats for the NFL
+	// Generate a player's stats for the current NFL Season
 	await yahoo.generatePlayerStats('423.p.30977');
 	// TODO Figure out how to map the player's stats to the stat categories
 }
